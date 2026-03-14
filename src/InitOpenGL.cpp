@@ -233,7 +233,12 @@ int InitOpenGL::TestOpenGL3Texture() {
     glEnableVertexAttribArray(2); //second attribute so its 1 not 0
 
     //build the textures
-    unsigned int texture = StbImageImp::buildTexture("resources/textures/container.jpg");
+    unsigned int texturecontainer = StbImageImp::buildTexture("resources/textures/container.jpg");
+    unsigned int textureface = StbImageImp::buildTexture("resources/textures/awesomeface.png");
+
+    //activate the shader
+    s1.use();
+    s1.setInt("texture2", 1);
 
     while (!glfwWindowShouldClose(window)) {
         //clear the bit buffer
@@ -244,7 +249,10 @@ int InitOpenGL::TestOpenGL3Texture() {
         s1.use();
 
         //apply texture
-        glBindTexture(GL_TEXTURE_2D, texture);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texturecontainer);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, textureface);
 
         //bind the vertex array
         glBindVertexArray(VAO1);
